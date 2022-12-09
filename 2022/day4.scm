@@ -21,24 +21,20 @@
 (define (line->pair line)
   (map parse-range (string-split line #\,)))
 
-(define fully-contains (call-with-input-file "day4.txt"
-  (lambda (port)
+(define (part pred)
+  (call-with-input-file "day4.txt"
+    (lambda (port)
     (let ((trans (compose (tmap line->pair)
-                          (tfilter (is? contains)))))
+                          (tfilter (is? pred)))))
       (port-transduce trans rcount get-line port)))))
 
-(define groups-overlaps (call-with-input-file "day4.txt"
-  (lambda (port)
-    (let ((trans (compose (tmap line->pair)
-                          (tfilter (is? overlaps)))))
-      (port-transduce trans rcount get-line port)))))
 
 
 
 (display "Part 1: ")
-(display fully-contains)
+(display (part contains))
 (newline)
 
 (display "Part 2: ")
-(display groups-overlaps)
+(display (part overlaps))
 (newline)
